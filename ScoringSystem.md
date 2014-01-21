@@ -67,5 +67,8 @@ How can I start at `0:0` and get to `6:4`? Well, start from the bottom.
               6:4
 ```
 
+Time Complexity of `O(p1*p2)` and a space complexity of `O(p1*p2)`
+
 ## Zoom-In
 
+`n C r` formula. `O(max(p1, p2))` complexity.
