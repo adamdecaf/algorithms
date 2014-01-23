@@ -50,12 +50,21 @@ There are many possible ways to compute the gcd of two numbers.
 
 * Common Factors
 
-    O(mine(m,n))
+    O(min(m,n))
     Assuming the lists are sorted, alternate walking down them and progressing
     the pointers when the values are equal (and storing that elsewhere) or
-    progressing the pointer whose value is lesser to the next element.
+    progressing the pointer whose value is lesser than the next element.
 
-    2 3 7 9 11
-    2 5 9
+    2 2 3 7 9 11
+    2 2 5 9
 
-    -> 2 -> 9
+    -> 2 -> 2 -> 9
+
+    Result <- []
+    while lst1 not empty and
+          lst2 not empty
+      if lst1.head == lst2.head
+        Result <- lst1.head
+        eliminate them both
+      else
+        eliminate smaller
