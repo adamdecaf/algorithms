@@ -67,4 +67,4 @@ There are many possible ways to compute the gcd of two numbers.
         Result <- lst1.head
         eliminate them both
       else
-        eliminate smaller
+        eliminate smaller value
