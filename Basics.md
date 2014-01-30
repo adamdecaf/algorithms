@@ -21,3 +21,9 @@ with building each of the parts and then bringing them together.
 
 Zoom-In algorithms are those which allow the problem space to be minified or
 reduced to a solution that will statisfy the end goal.
+
+## Deterministic / Non-Determineistic
+
+Deterministic algorithms are those that will always operate the same steps
+on every run of the algorithm. It will always give the same output for the
+same input.
