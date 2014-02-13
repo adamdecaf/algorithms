@@ -1,5 +1,12 @@
 #!/usr/bin/ruby
 
+##
+## Homework #2
+## By: Adam Shannon
+## For: Algorithms
+## http://cs.uni.edu/~wallingf/teaching/cs3530/homework/homework02.html
+##
+
 class Board
   def self.random_board(num_items, max_value)
     [].fill(0, 0, num_items).map { |_| Random.rand(max_value) }
@@ -98,6 +105,19 @@ class Game
   end
 end
 
+def driver()
+  game = Game.new
+
+  greedy = GreedyPlayer.new
+  zoomin = ZoominPlayer.new
+
+  num_trials = ARGV[0].to_i
+  puts "p1 as greedy #{game.experiment(greedy, zoomin, num_trials)}"
+  puts "p1 as zoomin #{game.experiment(zoomin, greedy, num_trials)}"
+end
+
 game = Game.new
 puts "Play a game: #{game.game(greedy, zoomin, Board.random_board(4, 100))}"
 puts "Playing 5 games, p1 won: #{game.experiment(greedy, zoomin, 5)} time(s)."
+puts "Running 2 experiments: "
+driver()

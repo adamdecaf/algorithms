@@ -1,0 +1,51 @@
+== Table of results ==
+
+----------------------------------------------------
+| num_trials | p1 = greedy wins | p1 = zoomin wins |
+|     10     |         5        |        1         |
+|    100     |        72        |        26        |
+|   1000     |       626        |       250        |
+|  10000     |       N/A        |       N/A        |
+| 100000     |       N/A        |       N/A        |
+|1000000     |       N/A        |       N/A        |
+|--------------------------------------------------|
+
+== Raw results ==
+adam@earth:~/src/school/algorithms/homework/homework2$ ./hw2.rb 10
+Play a game: 1.0
+Playing 5 games, p1 won: 3 time(s).
+Running 2 experiments:
+p1 as greedy 5
+p1 as zoomin 1
+
+adam@earth:~/src/school/algorithms/homework/homework2$ ./hw2.rb 100
+Play a game: 0.5
+Playing 5 games, p1 won: 3 time(s).
+Running 2 experiments:
+p1 as greedy 72
+p1 as zoomin 26
+
+adam@earth:~/src/school/algorithms/homework/homework2$ ./hw2.rb 1000
+Play a game: 1.0
+Playing 5 games, p1 won: 5 time(s).
+Running 2 experiments:
+p1 as greedy 626
+p1 as zoomin 250
+
+adam@earth:~/src/school/algorithms/homework/homework2$ ./hw2.rb 10000
+Play a game: 0.5
+Playing 5 games, p1 won: 3 time(s).
+Running 2 experiments:
+./hw2.rb:27: stack level too deep (SystemStackError)
+
+adam@earth:~/src/school/algorithms/homework/homework2$ ./hw2.rb 100000
+Play a game: 0.5
+Playing 5 games, p1 won: 5 time(s).
+Running 2 experiments:
+./hw2.rb:27: stack level too deep (SystemStackError)
+
+adam@earth:~/src/school/algorithms/homework/homework2$ ./hw2.rb 1000000
+Play a game: 0.5
+Playing 5 games, p1 won: 1 time(s).
+Running 2 experiments:
+./hw2.rb:27: stack level too deep (SystemStackError)
