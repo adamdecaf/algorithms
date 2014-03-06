@@ -1,0 +1,22 @@
+mystory(n)
+ input n, an integer
+ global array A[1..m]
+ if n == 1
+   write A
+ else
+   for i <- 1 to n do
+     mystory(n-1)
+     if n is odd
+       swap A[1] and A[n]
+     else
+       swap A[i] and A[n]
+
+A = [p, i, l, g, r, i m]
+
+1. Trace mystory(2), mystory(3)
+2. What does mystory do?
+3. What is the compelxity?
+
+[p, g, l, i, r, i m], i = 1, n = 3
+print ^^
+[p, g, i, l, r, i m], i = 2, n = 3
