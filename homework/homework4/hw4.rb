@@ -1,6 +1,12 @@
 #!/usr/bin/ruby
 # -*- coding: utf-8 -*-
 
+##
+## Adam Shannon
+## CS 3530
+## Dr. Wallingford
+##
+
 ## Problem 1
 
 # Input : Array S[0..n-1] of n characters (the string)
@@ -154,3 +160,17 @@ end
 puts "largest_indexes([1,2,3,4,5,6,7,5,7,5,3,2,7,7,7]) = #{largest_indexes([1,2,3,4,5,6,7,5,7,5,3,2,7,7,7])}"
 
 ## Problem 4
+## Consider the the divide-and-conquer multiplication algorithm we learned in Session 14.
+
+## 1) Demonstrate the algorithm by computing 1710 * 1011
+## 1710 * 1011
+## (1710 / 2)  *  (1011 * 2)
+##  = 855 * 2022
+##  = 1728810
+
+## 2) Why does this algorithm not outperform conventional multiplication algorithms until the numbers become quite long?
+## Because you're not gaining much from a shift over the build in multiplication algorithm that's implemented in hardware.
+## Also, some hardware may do this natively on the bare metal anyway (in a way that's the most optional).
+## Sometimes compilers (GCC, for example) will be better about optimizing numerical computations like this.
+## The trade off from a lot more additions won't be seen until you're avoiding huge multiplications that the
+##  hardware or compiler can't optimize away easily.
