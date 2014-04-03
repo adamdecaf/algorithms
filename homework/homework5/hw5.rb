@@ -23,7 +23,7 @@ class HashFunction
   end
 
   def hash(v)
-    (v % @n) * @offset
+    (v % @n) * (@offset << 4)
   end
 end
 
@@ -109,11 +109,16 @@ class BloomFilter
   def contains?(v)
     results = hash_results(v)
     or_masked_results = results.reduce { |acc, res| acc | res }
-    zipped_bits = to_bin_arr(or_masked_results).reverse.zip(to_bin_arr(@bit_vec).reverse)
-    zipped_bits.all? { |input, bitz| input == bitz }
-  end
 
-  def count()
+    masked_or_arr = to_bin_arr(or_masked_results).reverse
+    bit_vec_arr = to_bin_arr(@bit_vec).reverse
+
+    if masked_or_arr.size <= bit_vec_arr.size
+      zipped_bits = masked_or_arr.zip(bit_vec_arr)
+      zipped_bits.all? { |input, bitz| input == bitz }
+    else
+      false
+    end
   end
 
   private
@@ -170,11 +175,11 @@ def find_error_rate(bf, arr)
       score + 1
     end
   }
-  count / arr.size
+  (count / arr.size) * 100
 end
 
 def find_inverse_error_rate(bf, arr)
-  1 - find_error_rate(bf, arr)
+  (1 - (find_error_rate(bf, arr) / 100)) * 100
 end
 
 # Part 4
@@ -188,36 +193,27 @@ end
 
 puts "=== Part 4 ==="
 
+bf_01 = BloomFilterFactory.make_filter(0.01, 10000)
+bf_001 = BloomFilterFactory.make_filter(0.001, 10000)
+bf_0001 = BloomFilterFactory.make_filter(0.0001, 10000)
+
 ## Membership test
 members = generate_random_ints()
-hf_mem01 = BloomFilterFactory.make_filter(0.01, 10000)
-hf_mem001 = BloomFilterFactory.make_filter(0.001, 10000)
-hf_mem0001 = BloomFilterFactory.make_filter(0.0001, 10000)
 members.each { |m|
-  hf_mem01.insert(m)
-  hf_mem001.insert(m)
-  hf_mem0001.insert(m)
+  bf_01.insert(m)
+  bf_001.insert(m)
+  bf_0001.insert(m)
 }
 
-puts "members .01 bf error rate: #{find_error_rate(hf_mem01, members)}%"
-puts "members .001 bf error rate: #{find_error_rate(hf_mem001, members)}%"
-puts "members .0001 bf error rate: #{find_error_rate(hf_mem0001, members)}%"
+puts "members .01 bf error rate: #{find_error_rate(bf_01, members)}%"
+puts "members .001 bf error rate: #{find_error_rate(bf_001, members)}%"
+puts "members .0001 bf error rate: #{find_error_rate(bf_0001, members)}%"
 
 ## Non-membership test
 non_members = generate_random_ints().map { |n| n - 1 }
-hf_non_mem01 = BloomFilterFactory.make_filter(0.01, 10000)
-hf_non_mem001 = BloomFilterFactory.make_filter(0.001, 10000)
-hf_non_mem0001 = BloomFilterFactory.make_filter(0.0001, 10000)
-non_members.each { |n|
-  hf_non_mem01.insert(n)
-  hf_non_mem001.insert(n)
-  hf_non_mem0001.insert(n)
-}
-
-puts "non members .01 bf error rate: #{find_inverse_error_rate(hf_non_mem01, non_members)}%"
-puts "non members .001 bf error rate: #{find_inverse_error_rate(hf_non_mem001, non_members)}%"
-puts "non members .0001 bf error rate: #{find_inverse_error_rate(hf_non_mem0001, non_members)}%"
-
+puts "non members .01 bf error rate: #{find_inverse_error_rate(bf_01, non_members)}%"
+puts "non members .001 bf error rate: #{find_inverse_error_rate(bf_001, non_members)}%"
+puts "non members .0001 bf error rate: #{find_inverse_error_rate(bf_0001, non_members)}%"
 
 # Part 5
 # Repeat the process of Task 4 for each of these bit vector sizes:
@@ -229,36 +225,28 @@ puts "non members .0001 bf error rate: #{find_inverse_error_rate(hf_non_mem0001,
 
 puts "=== Part 5 ==="
 
+bf2_01 = BloomFilterFactory.make_filter(0.01, 10000, 1.50)
+bf2_001 = BloomFilterFactory.make_filter(0.001, 10000, 0.75)
+bf2_0001 = BloomFilterFactory.make_filter(0.0001, 10000, 0.5)
+
 ## Membership test
 members = generate_random_ints()
-hf_mem01 = BloomFilterFactory.make_filter(0.01, 10000, 1.50)
-hf_mem001 = BloomFilterFactory.make_filter(0.001, 10000, 0.75)
-hf_mem0001 = BloomFilterFactory.make_filter(0.0001, 10000, 0.5)
 members.each { |m|
-  hf_mem01.insert(m)
-  hf_mem001.insert(m)
-  hf_mem0001.insert(m)
+  bf2_01.insert(m)
+  bf2_001.insert(m)
+  bf2_0001.insert(m)
 }
 
-puts "members .01 bf error rate: #{find_error_rate(hf_mem01, members)}%"
-puts "members .001 bf error rate: #{find_error_rate(hf_mem001, members)}%"
-puts "members .0001 bf error rate: #{find_error_rate(hf_mem0001, members)}%"
+puts "members .01 bf error rate: #{find_error_rate(bf2_01, members)}%"
+puts "members .001 bf error rate: #{find_error_rate(bf2_001, members)}%"
+puts "members .0001 bf error rate: #{find_error_rate(bf2_0001, members)}%"
 
 ## Non-membership test
 non_members = generate_random_ints().map { |n| n - 1 }
-hf_non_mem01 = BloomFilterFactory.make_filter(0.01, 10000, 1.5)
-hf_non_mem001 = BloomFilterFactory.make_filter(0.001, 10000, 0.75)
-hf_non_mem0001 = BloomFilterFactory.make_filter(0.0001, 10000, 0.5)
-non_members.each { |n|
-  hf_non_mem01.insert(n)
-  hf_non_mem001.insert(n)
-  hf_non_mem0001.insert(n)
-}
 
-puts "non members .01 bf error rate: #{find_inverse_error_rate(hf_non_mem01, non_members)}%"
-puts "non members .001 bf error rate: #{find_inverse_error_rate(hf_non_mem001, non_members)}%"
-puts "non members .0001 bf error rate: #{find_inverse_error_rate(hf_non_mem0001, non_members)}%"
-
+puts "non members .01 bf error rate: #{find_inverse_error_rate(bf2_01, non_members)}%"
+puts "non members .001 bf error rate: #{find_inverse_error_rate(bf2_001, non_members)}%"
+puts "non members .0001 bf error rate: #{find_inverse_error_rate(bf2_0001, non_members)}%"
 
 # End
 # Create a readme.txt file that presents:
