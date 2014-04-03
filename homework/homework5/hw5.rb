@@ -1,6 +1,12 @@
 #!/usr/bin/ruby
 # -*- coding: utf-8 -*-
 
+##
+## Adam Shannon
+## CS 3530
+## Dr. Wallingford
+##
+
 # Part 1
 # Implement a simple hash function factory. Given an argument m, the desired hash table size, the
 # factory should return a hash function that maps integers into a table of that length.
